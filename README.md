@@ -5,7 +5,7 @@ This project contains the work for the paper "Securing database backup using blo
   - [Modules ](#modules-)
   - [Tools and framework ](#tools-and-framework-)
   - [Installation and running ](#installation-and-running-)
-  - [Proposed Architecture](#proposed-architecture)
+  - [Proposed Architecture](#proposed-architecture-)
   - [Contributors and maintainers ](#contributors-and-maintainers-)
 
 
@@ -86,10 +86,10 @@ Go to the displayed URL and access paths like **/register** to register a new us
 > The implementation is tested on Ubuntu Ubuntu 18.04 and Ubuntu 20.4
 
 
-## Proposed Architecture [&uarr;](#contributors-and-maintainers-)
+## Proposed Architecture [&uarr;](#proposed-architecture-)
 ![Architecture of the database with blockchain and IPFSnetwork](./images/p2p_architecture.jpg)
 
-## Contributors and maintainers 
+## Contributors and maintainers [&uarr;](#contributors-and-maintainers-)
 
 This project and repository is created and maintained by:
 
