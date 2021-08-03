@@ -1,5 +1,6 @@
 import ipfshttpclient
 
+
 class IpfsClient:
     def __init__(self):
         self.client = None
@@ -11,8 +12,8 @@ class IpfsClient:
         try:
             self.client = ipfshttpclient.connect()
         except Exception as e:
-            print("Error connecting to the client", e)  
-	    
+            print("Error connecting to the client", e)
+
     def create_backup(self, file_path):
         """
         Add a file to the IPFS network
@@ -36,8 +37,8 @@ class IpfsClient:
         try:
             self.client.close()
         except Exception as e:
-            print("Error closing the client", e)   
-    
+            print("Error closing the client", e)
+
     def get_id(self):
         """
         Get the ID of the current node

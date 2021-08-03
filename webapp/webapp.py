@@ -1,35 +1,49 @@
-from uuid import uuid4
-
-from flask import Flask, jsonify, request, render_template
-from ipfshttpclient.client import block
-from flask_mysqldb import MySQL
-import MySQLdb.cursors
-from werkzeug.wrappers import response
+import re
 import sys
 sys.path.append('../')
+from uuid import uuid4
+
+import environ
+import MySQLdb.cursors
 from core.backup import db_backup, db_recovery
 from core.blockchain import Blockchain
 from core.ipfsclient import IpfsClient
-import re
+from flask import Flask, jsonify, render_template, request
+from flask_mysqldb import MySQL
+from ipfshttpclient.client import block
+from werkzeug.wrappers import response
 
-# Instantiate the Node
+
+
+"""
+Fetch environment variables from .env in parent directory
+"""
+env = environ.Env()
+env.read_env('../.env')
+
+"""
+Initialize the Flask App
+"""
 app = Flask(__name__)
-
 app.secret_key = 'your secret key'
-  
-  
-app.config['MYSQL_HOST'] = ''
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'animesh987'
-app.config['MYSQL_DB'] = 'test1'
-  
-  
+
+"""
+Set Flask App configs for the MySQL database connection
+"""
+app.config['MYSQL_HOST'] = env("WEBAPP_MYSQL_HOST")
+app.config['MYSQL_USER'] = env("WEBAPP_MYSQL_USER")
+app.config['MYSQL_PASSWORD'] = env("WEBAPP_MYSQL_PASS")
+app.config['MYSQL_DB'] = env("WEBAPP_MYSQL_DBNAME")
 mysql = MySQL(app)
-  
-# Generate a globally unique address for this node
+
+"""
+Generate a globally unique address for this node
+"""
 node_identifier = str(uuid4()).replace('-', '')
 
-# Instantiate the Blockchain
+"""
+Instantiate the Blockchain
+"""
 blockchain = Blockchain()
 
 
@@ -48,7 +62,10 @@ def mine(type, command):
         'proof': block['proof'],
         'previous_hash': block['previous_hash'],
     }
+
+    # Return response as a json
     return jsonify(response), 200
+
 
 @app.route('/chain', methods=['GET'])
 def full_chain():
@@ -65,7 +82,7 @@ def full_chain():
 @app.route('/users', methods=['GET'])
 def users():
     """
-    Get all the users inside the database
+    Fetch all the users in the database
     """
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute('SELECT * FROM users')
@@ -73,37 +90,35 @@ def users():
 
     return render_template('users.html', user_list=user_list)
 
+
 @app.route('/backup', methods=['GET'])
 def backup():
     """
     Generate a database backup file and store it inside the IPFS network
     """
     file_path = db_backup()
+
     client = IpfsClient()
-
     client.connect()
-
     node = client.create_backup(file_path)
-
     client.close()
 
     blockchain.mine(type='backup', body=node['Hash'])
 
-    response = node
+    return "Backup successful", 200
 
-    return jsonify(response), 200
 
 @app.route('/retrieve', methods=['GET'])
 def retrieve():
     """
     Retrieve the database file from the IPFS network and load it into the database
     """
-    backup_file = "./test2.txt"
+    backup_file = env("TEMP_BACKUP_STORE_PATH")
     response = blockchain.chain
-    print(blockchain.chain)
 
     cid = None
 
+    # Fetch latest backup block in blockchain
     for block in reversed(blockchain.chain):
         if block['type'] == 'backup':
             cid = block['body']
@@ -111,24 +126,20 @@ def retrieve():
 
     client = IpfsClient()
     client.connect()
-
-    print(cid)
-
     content = client.retrieve_backup(cid)
-
-    print(content)
-
     client.close()
-
     response = cid
 
+    # Write the backup into a temporary file TEMP_BACKUP_STORE
     with open(backup_file, "wb") as file:
         file.write(content)
 
-    blockchain.mine(type='recovery', body=cid)
-        
-    return jsonify(response), 200
+    # Restore the backup into the Destination Database
+    db_recovery(backup_file)
 
+    blockchain.mine(type='recovery', body=cid)
+
+    return jsonify(response), 200
 
 
 @app.route('/nodes/resolve', methods=['GET'])
@@ -152,25 +163,24 @@ def consensus():
     return jsonify(response), 200
 
 
-@app.route('/register', methods =['GET', 'POST'])
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     """
-    REgister a new user
+    Register a new user
     """
-
     msg = ''
-    print(request.method)
     if request.method == 'POST':
         username = request.form['name']
         email = request.form['email']
-        organisation = request.form['organisation']  
+        organisation = request.form['organisation']
         address = request.form['address']
         city = request.form['city']
         state = request.form['state']
-        country = request.form['country']    
-        postalcode = request.form['postalcode'] 
+        country = request.form['country']
+        postalcode = request.form['postalcode']
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM users WHERE username = % s', (username, ))
+        cursor.execute(
+            'SELECT * FROM users WHERE username = % s', (username, ))
         account = cursor.fetchone()
         if account:
             msg = 'Account already exists !'
@@ -181,22 +191,23 @@ def register():
         elif not re.match(r'[0-9]+', postalcode):
             msg = 'Postal code should be a number'
         else:
-            command = "INSERT INTO users VALUES('{}', '{}' , '{}' , '{}' , '{}' , '{}' , '{}' , {});".format(username, email, organisation, address, city, state, country, postalcode )
-            print(command)
+            command = "INSERT INTO users VALUES('{}', '{}' , '{}' , '{}' , '{}' , '{}' , '{}' , {});".format(
+                username, email, organisation, address, city, state, country, postalcode)
             cursor.execute(command)
             mysql.connection.commit()
-            print("comm",command)
-            blockchain.mine(type='query',body=command)
+            blockchain.mine(type='query', body=command)
             msg = 'You have successfully registered !'
     elif request.method == 'GET':
         msg = 'Please fill out the form !'
-    return render_template('register.html', msg = msg)
+    return render_template('register.html', msg=msg)
+
 
 if __name__ == '__main__':
     from argparse import ArgumentParser
 
     parser = ArgumentParser()
-    parser.add_argument('-p', '--port', default=5000, type=int, help='port to listen on')
+    parser.add_argument('-p', '--port', default=5000,
+                        type=int, help='port to listen on')
     args = parser.parse_args()
     port = args.port
 

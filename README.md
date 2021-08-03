@@ -24,6 +24,7 @@ Following tools and framework are used in this project:
 
 
 ## Installation and running 
+> Installation instructions for Ubuntu 20.04.2 LTS
 
 ### Installing python3
 ```
@@ -47,8 +48,8 @@ sudo apt install mysql-server
 Run the below commands to install IPFS
 
 ```
-wget https://dist.ipfs.io/go-ipfs/v0.9.0/go-ipfs_v0.9.0_linux-amd64.tar.gz
-tar -xvzf go-ipfs_v0.9.0_linux-amd64.tar.gz
+wget https://dist.ipfs.io/go-ipfs/v0.4.23/go-ipfs_v0.4.23_linux-amd64.tar.gz
+tar -xvzf go-ipfs_v0.4.23_linux-amd64.tar.gz
 cd go-ipfs
 sudo bash install.sh
 
@@ -64,6 +65,7 @@ ipfs --version
 Start the IPFS daemon at each node connected to the IPFS network
 
 ```
+ipfs init
 ipfs daemon
 ```
 

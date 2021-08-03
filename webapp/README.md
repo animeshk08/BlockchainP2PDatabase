@@ -16,7 +16,7 @@ app.config['MYSQL_DB'] = ''
 ```
 mysql> create database db;
 mysql> use db;
-CREATE TABLE users1 (username varchar2(20), email varchar(20), organisation varchar(50), address varchar(255), city varchar(50), state varchar(50), country varchar(50), postalcode int(10), PRIMARY KEY(username));
+mysql> CREATE TABLE users ( username VARCHAR(10), email VARCHAR(50), organisation VARCHAR(50), address VARCHAR(50), city VARCHAR(30), state VARCHAR(30), country VARCHAR(30), postalcode INT(10), PRIMARY KEY (username) );
 ```
 
 ### Running instructions

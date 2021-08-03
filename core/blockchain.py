@@ -2,6 +2,7 @@ import hashlib
 import json
 from time import time
 from urllib.parse import urlparse
+
 import requests
 
 """
@@ -12,7 +13,7 @@ class Blockchain:
         """
         Intialize the blokchain list. Nodes is a set of nodes which can connect to the blockchain.
         """
-        
+
         self.chain = []
         self.nodes = set()
 
@@ -110,7 +111,6 @@ class Blockchain:
         last_block = self.last_block
         proof = self.proof_of_work(last_block)
 
-
     # Forge the new Block by adding it to the chain
         previous_hash = self.hash(last_block)
         block = self.new_block(proof, previous_hash, type, body)
@@ -163,7 +163,7 @@ class Blockchain:
         Simple Proof of Work Algorithm:
          - Find a number a' such that hash(aa') contains leading 4 zeroes
          - Where a is the previous proof, and a' is the new proof
-         
+
         :param last_block: <dict> last Block
         :return: <int> proof of the current block
         """
@@ -190,5 +190,5 @@ class Blockchain:
         guess = f'{last_proof}{last_hash}{proof}'.encode()
         guess_hash = hashlib.sha256(guess).hexdigest()
 
-        #Checks if the hexadecimal value at index i of the guess hash is equal to the hexadecimal value of i
+        # Checks if the hexadecimal value at index i of the guess hash is equal to the hexadecimal value of i
         return guess_hash[:4] == "0000"
