@@ -21,7 +21,7 @@ pip3 install locust
 # here file passed will be the configuration to be evaluated (native or with blockchain + p2p network)
 locust -f "load_test.py"
  ```
- - Specify parameters for the load test
+ - Specify parameters for the load test \
 ![Locust web UI](../images/locust-web.png)
 ---
  - Start the load test and below shows the example metrics observed:
