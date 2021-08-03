@@ -15,11 +15,11 @@ mysql> CREATE TABLE users ( username VARCHAR(10), email VARCHAR(50), organisatio
 ```
 python3 webapp.py
 ```
-Go to the URL http://192.168.0.5:5000/register
+Go to the displayed URL and use below mentioned paths to perform different tasks
 
 ### Paths
 ---
-* /register : Register a new entry
+* /register : Register a new entry \
 ![Register](../images/register-page.png)
 ---
 * /chain : Display the current status of the blockchain
@@ -28,6 +28,6 @@ Go to the URL http://192.168.0.5:5000/register
 ---
 * /retrieve : Retrieve the latest database backup
 ---
-* /users : Get all the users inside the database
+* /users : Get all the users inside the database \
 ![User List](../images/user-list.png)
 ---
