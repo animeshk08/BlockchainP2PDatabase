@@ -5,15 +5,16 @@ This project contains the work for the paper "Securing database backup using blo
   - [Modules ](#modules-)
   - [Tools and framework ](#tools-and-framework-)
   - [Installation and running ](#installation-and-running-)
+  - [Proposed Architecture](#proposed-architecture)
   - [Contributors and maintainers ](#contributors-and-maintainers-)
 
 
-## Modules 
+## Modules [&uarr;](#modules-)
 * core- The directory containing the main codebase
 * evaluation- The files to run tests as well as the test results lies here
 * webapp- A simple implementation of a one page webapp using the modified database
 
-## Tools and framework 
+## Tools and framework [&uarr;](#tools-and-framework-)
 
 Following tools and framework are used in this project:
 
@@ -23,7 +24,7 @@ Following tools and framework are used in this project:
 * [MYSQL](https://www.mysql.com/)
 
 
-## Installation and running 
+## Installation and running [&uarr;](#installation-and-running-)
 
 ### Installing python3 and pip3
 We used python version 3.8.10 for this project
@@ -80,12 +81,12 @@ Run the webapp
 python3 webapp.py
 ```
 
-Go to the URL http://192.168.0.5:5000/register to register a new user
+Go to the displayed URL and access paths like **/register** to register a new user
 
 > The implementation is tested on Ubuntu Ubuntu 18.04 and Ubuntu 20.4
 
 
-## Architecture of the database with blockchain and IPFSnetwork
+## Proposed Architecture [&uarr;](#contributors-and-maintainers-)
 ![Architecture of the database with blockchain and IPFSnetwork](./images/p2p_architecture.jpg)
 
 ## Contributors and maintainers 
