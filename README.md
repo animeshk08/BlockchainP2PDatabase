@@ -1,4 +1,4 @@
-This project contains the work for the paper "Securing database backup using blockchain andpeer-to-peer network" 
+This project contains the work for the paper "Securing database backup using blockchain and peer-to-peer network" 
 
 ## Contents
 
