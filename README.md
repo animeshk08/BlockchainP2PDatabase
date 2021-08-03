@@ -86,7 +86,7 @@ Go to the URL http://192.168.0.5:5000/register to register a new user
 
 
 ## Architecture of the database with blockchain and IPFSnetwork
-![Architecture of the database with blockchain and IPFSnetwork](./images/p2p_architecture.png)
+![Architecture of the database with blockchain and IPFSnetwork](./images/p2p_architecture.jpg)
 
 ## Contributors and maintainers 
 
