@@ -5,6 +5,8 @@ from ipfshttpclient.client import block
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 from werkzeug.wrappers import response
+import sys
+sys.path.append('../')
 from core.backup import db_backup, db_recovery
 from core.blockchain import Blockchain
 from core.ipfsclient import IpfsClient
