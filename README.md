@@ -24,23 +24,22 @@ Following tools and framework are used in this project:
 
 
 ## Installation and running 
-> Installation instructions for Ubuntu 20.04.2 LTS
 
-### Installing python3
+### Installing python3 and pip3
+We used python version 3.8.10 for this project
 ```
-sudo apt install python3.7
-```
-
-### Installing pip packages
-```
-pip install Flask
-pip install flask_mysqldb
-pip install ipfshttpclient
+sudo apt-get install python3.8 -y
+sudo apt-get install python3-pip -y
 ```
 
-### Installing MySQL
+### Installing python packages required for this project
 ```
-sudo apt install mysql-server
+pip3 install -r requirements.txt
+```
+
+### Installing MySQL Client
+```
+sudo apt-get install mysql-client -y
 ```
 
 ### Installing IPFS
@@ -52,7 +51,6 @@ wget https://dist.ipfs.io/go-ipfs/v0.4.23/go-ipfs_v0.4.23_linux-amd64.tar.gz
 tar -xvzf go-ipfs_v0.4.23_linux-amd64.tar.gz
 cd go-ipfs
 sudo bash install.sh
-
 ``` 
 
 Check IPFS installation
@@ -75,9 +73,14 @@ Run the webapp
 python3 webapp.py
 ```
 
-Go to the URL http://192.168.0.5:5000/register
+Go to the URL http://192.168.0.5:5000/register and below shown page appears
+![Register](./images/register-page.png)
 
-> The implementation is test on Ubuntu Ubuntu 18.04 and Ubuntu 20.4
+> The implementation is tested on Ubuntu Ubuntu 18.04 and Ubuntu 20.4
+
+
+## Architecture of the database with blockchain and IPFSnetwork
+![Architecture of the database with blockchain and IPFSnetwork](./images/p2p_architecture.png)
 
 ## Contributors and maintainers 
 
