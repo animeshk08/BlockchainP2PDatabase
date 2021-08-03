@@ -20,7 +20,7 @@ Go to the URL http://192.168.0.5:5000/register
 ### Paths
 ---
 * /register : Register a new entry
-![Register](./images/register-page.png)
+![Register](../images/register-page.png)
 ---
 * /chain : Display the current status of the blockchain
 ---
@@ -29,5 +29,5 @@ Go to the URL http://192.168.0.5:5000/register
 * /retrieve : Retrieve the latest database backup
 ---
 * /users : Get all the users inside the database
-![User List](./images/user-list.png)
+![User List](../images/user-list.png)
 ---
