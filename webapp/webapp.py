@@ -12,7 +12,7 @@ from flask import Flask, jsonify, render_template, request
 from flask_mysqldb import MySQL
 from ipfshttpclient.client import block
 from werkzeug.wrappers import response
-
+import json
 
 
 """
@@ -87,7 +87,6 @@ def users():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute('SELECT * FROM users')
     user_list = cursor.fetchall()
-
     return render_template('users.html', user_list=user_list)
 
 

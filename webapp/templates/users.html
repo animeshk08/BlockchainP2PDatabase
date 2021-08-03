@@ -119,13 +119,26 @@
         <thead>
             <tr>
                 <th scope="col">Username</th>
-
+                <th scope="col">Email</th>
+                <th scope="col">Organisation</th>
+                <th scope="col">Address</th>
+                <th scope="col">City</th>
+                <th scope="col">State</th>
+                <th scope="col">Country</th>
+                <th scope="col">Postalcode</th>
             </tr>
         </thead>
         <tbody>
-            {% for user in {{user_list}} %}
+            {% for user in user_list %}
             <tr>
-                <td data-label="Username">{{user.username}}</td>
+                <td data-label="Username">{{user['username']}}</td>
+                <td data-label="Email">{{user['email']}}</td>
+                <td data-label="Organisation">{{user['organisation']}}</td>
+                <td data-label="Address">{{user['address']}}</td>
+                <td data-label="City">{{user['city']}}</td>
+                <td data-label="State">{{user['state']}}</td>
+                <td data-label="Country">{{user['country']}}</td>
+                <td data-label="Postalcode">{{user['postalcode']}}</td>
             </tr>
             {% endfor %}
 

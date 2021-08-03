@@ -2,15 +2,6 @@ This is a simple implementation of the blockchain and peer-to-peer network based
 
 ### Pre-running instructions
 
-* Add your know database configuration by modifying the below lines in [webapp.py](./webapp.py)
-
-```
-app.config['MYSQL_HOST'] = ''
-app.config['MYSQL_USER'] = ''
-app.config['MYSQL_PASSWORD'] = ''
-app.config['MYSQL_DB'] = ''
-```
-
 * Create a database with a single user table.
 
 ```
@@ -27,9 +18,16 @@ python3 webapp.py
 Go to the URL http://192.168.0.5:5000/register
 
 ### Paths
-
+---
 * /register : Register a new entry
+![Register](./images/register-page.png)
+---
 * /chain : Display the current status of the blockchain
+---
 * /backup : Create a database backup
+---
 * /retrieve : Retrieve the latest database backup
+---
 * /users : Get all the users inside the database
+![User List](./images/user-list.png)
+---

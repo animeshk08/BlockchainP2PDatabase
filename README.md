@@ -42,6 +42,13 @@ pip3 install -r requirements.txt
 sudo apt-get install mysql-client -y
 ```
 
+### Defining the configurations in .env
+```
+# Copy .env.example file as .env
+# Edit .env and add configurations like: Webapp database connections, 
+#     backup and restore related settings.
+```
+
 ### Installing IPFS
 
 Run the below commands to install IPFS
@@ -73,8 +80,7 @@ Run the webapp
 python3 webapp.py
 ```
 
-Go to the URL http://192.168.0.5:5000/register and below shown page appears
-![Register](./images/register-page.png)
+Go to the URL http://192.168.0.5:5000/register to register a new user
 
 > The implementation is tested on Ubuntu Ubuntu 18.04 and Ubuntu 20.4
 

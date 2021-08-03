@@ -18,7 +18,7 @@ class Blockchain:
         self.nodes = set()
 
         # Create the starting block
-        self.new_block(previous_hash='1', proof=100, type='start', body=None)
+        self.new_block(previous_hash='1', nounce=100, type='start', body=None)
 
     def register_node(self, address):
         """
@@ -56,7 +56,7 @@ class Blockchain:
                 return False
 
             # Check that the Proof of Work is correct
-            if not self.valid_proof(last_block['proof'], block['proof'], last_block_hash):
+            if not self.valid_proof(last_block['nounce'], block['nounce'], last_block_hash):
                 return False
 
             last_block = block
@@ -109,18 +109,18 @@ class Blockchain:
         """
         # We run the proof of work algorithm to get the next proof...
         last_block = self.last_block
-        proof = self.proof_of_work(last_block)
+        nounce = self.proof_of_work(last_block)
 
     # Forge the new Block by adding it to the chain
         previous_hash = self.hash(last_block)
-        block = self.new_block(proof, previous_hash, type, body)
+        block = self.new_block(nounce, previous_hash, type, body)
 
         return block
 
-    def new_block(self, proof, previous_hash, type, body):
+    def new_block(self, nounce, previous_hash, type, body):
         """
         Create a new block in the blockchain
-        :param proof: The proof given by the Proof of Work algorithm
+        :param nounce: The nounce given by the Proof of Work algorithm
         :param previous_hash: Hash of previous Block
         :return: New Block
         """
@@ -130,7 +130,7 @@ class Blockchain:
             'timestamp': time(),
             'type': type,
             'body': body,
-            'proof': proof,
+            'nounce': nounce,
             'previous_hash': previous_hash or self.hash(self.chain[-1]),
         }
 
@@ -165,20 +165,20 @@ class Blockchain:
          - Where a is the previous proof, and a' is the new proof
 
         :param last_block: <dict> last Block
-        :return: <int> proof of the current block
+        :return: <int> nounce of the current block
         """
 
-        last_proof = last_block['proof']
+        last_proof = last_block['nounce']
         last_hash = self.hash(last_block)
 
-        proof = 0
-        while self.valid_proof(last_proof, proof, last_hash) is False:
-            proof += 1
+        nounce = 0
+        while self.valid_proof(last_proof, nounce, last_hash) is False:
+            nounce += 1
 
-        return proof
+        return nounce
 
     @staticmethod
-    def valid_proof(last_proof, proof, last_hash):
+    def valid_proof(last_proof, nounce, last_hash):
         """
         Validates the Proof
         :param last_proof: <int> Previous Proof
@@ -187,7 +187,7 @@ class Blockchain:
         :return: <bool> True if correct, False if not.
         """
 
-        guess = f'{last_proof}{last_hash}{proof}'.encode()
+        guess = f'{last_proof}{last_hash}{nounce}'.encode()
         guess_hash = hashlib.sha256(guess).hexdigest()
 
         # Checks if the hexadecimal value at index i of the guess hash is equal to the hexadecimal value of i

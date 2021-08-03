@@ -40,7 +40,7 @@ class MySqlClient:
         def wrapper(*args, **kwargs):
             start_time = time.time()
             try:
-                res = execute_query(*args, **kwargs)
+                res = execute_query_mine(*args, **kwargs)
                 events.request_success.fire(request_type="mysql",
                                             name=name,
                                             response_time=int(
@@ -66,6 +66,6 @@ class MySqlLocust(User):
         self.client = MySqlClient()
 
     @task
-    def execute_query(self):
+    def execute_query_mine(self):
         # pass the query to be executed
         self.client.execute_query_mine(env("LOAD_TEST_QUERY"))
