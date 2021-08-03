@@ -25,6 +25,57 @@ Following tools and framework are used in this project:
 
 ## Installation and running 
 
+### Installing python3
+```
+sudo apt install python3.7
+```
+
+### Installing pip packages
+```
+pip install Flask
+pip install flask_mysqldb
+pip install ipfshttpclient
+```
+
+### Installing MySQL
+```
+sudo apt install mysql-server
+```
+
+### Installing IPFS
+
+Run the below commands to install IPFS
+
+```
+wget https://dist.ipfs.io/go-ipfs/v0.9.0/go-ipfs_v0.9.0_linux-amd64.tar.gz
+tar -xvzf go-ipfs_v0.9.0_linux-amd64.tar.gz
+cd go-ipfs
+sudo bash install.sh
+
+``` 
+
+Check IPFS installation
+```
+ipfs --version
+```
+
+### Running instructions
+
+Start the IPFS daemon at each node connected to the IPFS network
+
+```
+ipfs daemon
+```
+
+Run the webapp
+
+```
+python3 webapp.py
+```
+
+Go to the URL http://192.168.0.5:5000/register
+
+> The implementation is test on Ubuntu Ubuntu 18.04 and Ubuntu 20.4
 
 ## Contributors and maintainers 
 
